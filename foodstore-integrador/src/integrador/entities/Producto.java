@@ -1,13 +1,13 @@
 package integrador.entities;
 
 public class Producto extends Base{
-    protected String nombre;
-    protected double precio;
-    protected String descripcion;
-    protected int stock;
-    protected String imagen;
-    protected boolean disponible;
-    protected  Categoria categoria;
+    private String nombre;
+    private double precio;
+    private String descripcion;
+    private int stock;
+    private String imagen;
+    private boolean disponible;
+    private  Categoria categoria;
 
 
     public Producto(String nombre, double precio, String descripcion, int stock, String imagen,Categoria categoria) {
@@ -28,6 +28,7 @@ public class Producto extends Base{
 
     }
 
+    // Getters
 
     public String getNombre(){
         return nombre;
@@ -36,4 +37,7 @@ public class Producto extends Base{
     public Categoria getCategoria(){
         return categoria;
     }
+
+    public double getPrecio(){ return precio; }
+
 }

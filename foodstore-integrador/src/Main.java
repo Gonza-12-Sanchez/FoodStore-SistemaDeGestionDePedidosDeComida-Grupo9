@@ -1,4 +1,5 @@
 import integrador.entities.Categoria;
+import integrador.entities.DetallePedido;
 import integrador.entities.Producto;
 
 void main() {
@@ -10,4 +11,8 @@ void main() {
     System.out.println(prod1.getNombre());
     System.out.println(prod1.getCreatedAt());
     System.out.println(prod1.getCategoria().getNombre());
+
+    DetallePedido det1 = new DetallePedido(3,prod1); // probar con 0 para que tire error propio
+
+    System.out.println(det1.getSubtotal());
 }
