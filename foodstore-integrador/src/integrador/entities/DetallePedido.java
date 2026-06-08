@@ -10,7 +10,8 @@ public class DetallePedido extends Base implements Calculable{
     public DetallePedido(int cantidad, Producto producto) {
 
         if(cantidad <= 0){
-            throw new CantidadInvalidaException("Cantidad de producto debe ser mayor a 0");
+            throw new CantidadInvalidaException("integrador.exception.CantidadInvalidaException");
+
         }
 
         super();
