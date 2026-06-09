@@ -1,1 +1,2 @@
-# Yo, Gonza, les doy el privilegio de formar partarte de mi grupo de élite, plebeyos.
+# [ ! ] Importante [ ! ]
+cuando clonen/descarguen el repositorio, y usen IntelliJ para abrir el proyecto, deben abrir el proyecto en la carpeta "foodstore-integrador", no "FoodStore-SistemaDeGestionDePedidosDeComida-Grupo9"
