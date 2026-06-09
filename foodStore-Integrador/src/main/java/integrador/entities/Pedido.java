@@ -2,6 +2,7 @@ package integrador.entities;
 
 import integrador.enums.Estado;
 import integrador.enums.FormatoPago;
+import integrador.exception.ListaDetallePedidoException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,10 +16,12 @@ public class Pedido extends Base implements Calculable{
 
     // Constructor
     public Pedido(LocalDate fecha, Estado estado, ArrayList<DetallePedido> listaDetalles, FormatoPago formatoPago) {
-        // validar (filtro) que listaDetalles no esté vacio.
-
-
         super();
+        // validar (filtro) que listaDetalles no esté vacio.
+        if(listaDetalles.isEmpty()){
+            throw new ListaDetallePedidoException("Debe agregar al menos un detalle al pedido.");
+        }
+
         this.fecha = fecha;
         this.estado = estado;
         this.total = calcularTotal(); // usa metodo calcularTotal()

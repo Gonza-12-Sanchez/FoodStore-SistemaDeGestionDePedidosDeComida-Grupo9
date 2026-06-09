@@ -8,13 +8,13 @@ public class DetallePedido extends Base implements Calculable{
     private double subtotal;
 
     public DetallePedido(int cantidad, Producto producto) {
+        super();
 
         if(cantidad <= 0){
-            throw new CantidadInvalidaException("integrador.exception.CantidadInvalidaException");
+            throw new CantidadInvalidaException("La cantidad ingresada es invalida. Esta tiene que ser mayor a 0");
 
         }
 
-        super();
         this.cantidad = cantidad;
         this.producto = producto;
         this.subtotal = calcularTotal();
