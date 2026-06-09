@@ -1,8 +1,8 @@
 package integrador.entities;
 
 public class Categoria extends Base{
-    protected String nombre;
-    protected String descripcion;
+    private String nombre;
+    private String descripcion;
 
     public Categoria(String nombre,String descripcion){
         super();

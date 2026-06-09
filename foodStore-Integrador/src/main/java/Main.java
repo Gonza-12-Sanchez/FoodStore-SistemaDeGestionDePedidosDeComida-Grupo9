@@ -1,3 +1,4 @@
+import integrador.config.DatabaseConfig;
 import integrador.entities.Categoria;
 import integrador.entities.DetallePedido;
 import integrador.entities.Producto;
@@ -13,8 +14,10 @@ public class Main{
         System.out.println(prod1.getCreatedAt());
         System.out.println(prod1.getCategoria().getNombre());
 
-        DetallePedido det1 = new DetallePedido(0,prod1); // probar con 0 para que tire error propio
+//        DetallePedido det1 = new DetallePedido(0,prod1); // probar con 0 para que tire error propio
+//
+//        System.out.println(det1.getSubtotal());
 
-        System.out.println(det1.getSubtotal());
+        DatabaseConfig.crearTablaUsuarios();
     }
 }

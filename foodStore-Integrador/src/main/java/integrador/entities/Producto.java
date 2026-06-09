@@ -1,6 +1,7 @@
 package integrador.entities;
 
 public class Producto extends Base{
+    //Atributos
     private String nombre;
     private double precio;
     private String descripcion;
@@ -9,7 +10,7 @@ public class Producto extends Base{
     private boolean disponible;
     private Categoria categoria;
 
-
+    //Constructor
     public Producto(String nombre, double precio, String descripcion, int stock, String imagen,Categoria categoria) {
         super();
         this.nombre = nombre;
@@ -29,15 +30,22 @@ public class Producto extends Base{
     }
 
     // Getters
-
-    public String getNombre(){
+    public String getNombre() {
         return nombre;
     }
-
-    public Categoria getCategoria(){
+    public double getPrecio() {
+        return precio;
+    }
+    public String getDescripcion() {
+        return descripcion;
+    }
+    public int getStock() {
+        return stock;
+    }
+    public boolean isDisponible() {
+        return disponible;
+    }
+    public Categoria getCategoria() {
         return categoria;
     }
-
-    public double getPrecio(){ return precio; }
-
 }

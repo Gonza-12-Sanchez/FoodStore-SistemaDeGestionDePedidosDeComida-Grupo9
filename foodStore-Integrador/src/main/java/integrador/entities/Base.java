@@ -4,13 +4,11 @@ import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Base {
-
     static protected AtomicInteger contador = new AtomicInteger(0);
     //Atributos
     protected int id;
     protected boolean eliminado;
     protected LocalDateTime createdAt;
-
 
     //Constructor
     public Base() {
@@ -19,17 +17,13 @@ public abstract class Base {
         this.createdAt =  LocalDateTime.now();
     }
 
-
-
-    //Getters and setters
-
+    //Getters
     public int getId() {return id;}
-
     public boolean isEliminado() {return eliminado;}
-
     public LocalDateTime getCreatedAt() {return createdAt;}
 
-
     //Metodos
-
+    public void delete() {
+        this.eliminado = true;
+    }
 }
