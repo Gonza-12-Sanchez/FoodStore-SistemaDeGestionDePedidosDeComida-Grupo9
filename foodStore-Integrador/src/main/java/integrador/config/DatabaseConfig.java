@@ -7,13 +7,11 @@ import java.sql.Statement;
 
 public class DatabaseConfig {
 
-    // La URL indica que usaremos sqlite y el nombre del archivo final
-    private static final String URL = "jdbc:sqlite:productos_database.db";
 
     public static Connection conectar() {
         Connection con = null;
         try {
-            con = DriverManager.getConnection(URL);
+            con = DriverManager.getConnection("jdbc:sqlite:productos_database.db");
             System.out.println("- conexion exitosa -");
         } catch (SQLException e) {
             System.err.println("[ERROR]: error al conectar a la base de datos: " + e.getMessage());
@@ -23,14 +21,16 @@ public class DatabaseConfig {
 
     // ESTO ES PRUEBA, NO ES UNA ENTDAD NUESTRA
     public static void crearTablaUsuarios() {
-        String sql = "CREATE TABLE IF NOT EXISTS usuarios ("
-                + " id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + " nombre TEXT NOT NULL,"
-                + " email TEXT"
+        String sql = "CREATE TABLE IF NOT EXISTS categorias ("
+                + "id_categoria VARCHAR PRIMARY KEY,"
+                + "nombre TEXT NOT NULL,"
+                + "descripcion TEXT,"
+                + "eliminado INTEGER NOT NULL,"
+                + "created_at TEXT NOT NULL"
                 + ");";
 
         try (Connection con = conectar();
-             Statement stmt = con.createStatement()) {
+             Statement stmt = con.createStatement() ) {
 
             stmt.execute(sql);
             System.out.println("Tabla verificada/creada.");

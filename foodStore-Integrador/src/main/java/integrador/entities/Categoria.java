@@ -1,5 +1,7 @@
 package integrador.entities;
 
+import java.time.LocalDateTime;
+
 public class Categoria extends Base{
     //Atributos
     private String nombre;
@@ -11,6 +13,13 @@ public class Categoria extends Base{
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
+
+    public Categoria(String id_categoria, boolean eliminado, LocalDateTime createdAt, String nombre, String descripcion){
+        super(id_categoria,eliminado,createdAt);
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+
 
     //Getters
     public String getNombre() {return nombre;}

@@ -1,24 +1,30 @@
 package integrador.entities;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.UUID;
 
 public abstract class Base {
-    static protected AtomicInteger contador = new AtomicInteger(0);
+
     //Atributos
-    protected int id;
+    protected String id;
     protected boolean eliminado;
     protected LocalDateTime createdAt;
 
     //Constructor
     public Base() {
-        this.id = contador.getAndIncrement();
+        this.id = UUID.randomUUID().toString();
         this.eliminado = false;
         this.createdAt =  LocalDateTime.now();
     }
 
+    public Base(String id, boolean eliminado, LocalDateTime createdAt) {
+        this.id = id;
+        this.eliminado = eliminado;
+        this.createdAt =  createdAt;
+    }
+
     //Getters
-    public int getId() {return id;}
+    public String getId() {return id;}
     public boolean isEliminado() {return eliminado;}
     public LocalDateTime getCreatedAt() {return createdAt;}
 
