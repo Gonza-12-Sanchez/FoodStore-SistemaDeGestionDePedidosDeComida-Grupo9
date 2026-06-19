@@ -6,6 +6,7 @@ import integrador.entities.Usuario;
 import integrador.enums.Rol;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class UsuarioDao {
@@ -30,7 +31,7 @@ public class UsuarioDao {
             pstmt.setString(7, usuario.getRol().name());
 
             pstmt.setBoolean(8, usuario.isEliminado());
-            pstmt.setString(9, usuario.getCreatedAt());
+            pstmt.setString(9, usuario.getCreatedAt().toString()); //Convertimos el objeto fecha a string
 
             // 3] ejecutar query
             pstmt.executeUpdate();
@@ -67,11 +68,13 @@ public class UsuarioDao {
                     String celular = rs.getString("celular");
                     String contrasenia = rs.getString("contraseña");
 
-                    // transformamos el string a enum Rol, usando upperCase poor las dudas
+                    // transformamos el string a enum Rol, usando upperCase por las dudas
                     Rol rol = Rol.valueOf(rs.getString("rol").toUpperCase());
 
                     boolean eliminado = rs.getBoolean("eliminado");
-                    String createdAt = rs.getString("created_at");
+
+                    String fechaStr = rs.getString("created_at");
+                    LocalDateTime createdAt = LocalDateTime.parse(fechaStr); // Parseamos de String a LocalDateTime
 
 
                     Usuario usuario = new Usuario(id_usuario,eliminado,createdAt,nombre,apellido,email,celular,contrasenia,rol  );

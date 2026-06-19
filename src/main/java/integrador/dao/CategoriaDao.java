@@ -4,6 +4,7 @@ import integrador.entities.Categoria;
 
 import java.sql.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import integrador.config.DatabaseConfig;
@@ -24,7 +25,7 @@ public class CategoriaDao {
             pstmt.setString(2, categoria.getNombre());
             pstmt.setString(3, categoria.getDescripcion());
             pstmt.setBoolean(4, categoria.isEliminado());
-            pstmt.setString(5, categoria.getCreatedAt());
+            pstmt.setString(5, categoria.getCreatedAt().toString()); //Convertimos el objeto fecha a string
 
             // 3] ejecutar query
             pstmt.executeUpdate();
@@ -50,7 +51,10 @@ public class CategoriaDao {
 
                 // Extraemos los datos de la fila actual
                 String id = rs.getString("id_categoria");
-                String createdAt = rs.getString("created_at");
+
+                String fechaStr = rs.getString("created_at");
+                LocalDateTime createdAt = LocalDateTime.parse(fechaStr); // Parseamos de String a LocalDateTime
+
                 boolean eliminado = rs.getBoolean("eliminado");
 
                 String nombre = rs.getString("nombre");

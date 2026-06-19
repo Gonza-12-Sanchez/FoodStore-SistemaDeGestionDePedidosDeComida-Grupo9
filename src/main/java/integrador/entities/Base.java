@@ -8,16 +8,16 @@ public abstract class Base {
     //Atributos
     protected String id;
     protected boolean eliminado;
-    protected String createdAt;
+    protected LocalDateTime createdAt;
 
     //Constructor
     public Base() {
         this.id = UUID.randomUUID().toString();
         this.eliminado = false;
-        this.createdAt =  LocalDateTime.now().toString();
+        this.createdAt =  LocalDateTime.now();
     }
 
-    public Base(String id, boolean eliminado, String createdAt) {
+    public Base(String id, boolean eliminado, LocalDateTime createdAt) {
         this.id = id;
         this.eliminado = eliminado;
         this.createdAt =  createdAt;
@@ -26,7 +26,7 @@ public abstract class Base {
     //Getters
     public String getId() {return id;}
     public boolean isEliminado() {return eliminado;}
-    public String getCreatedAt() {return createdAt;}
+    public LocalDateTime getCreatedAt() {return createdAt;}
 
     //Metodos
     public void delete() {

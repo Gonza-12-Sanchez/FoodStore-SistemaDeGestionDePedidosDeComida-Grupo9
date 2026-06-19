@@ -17,19 +17,19 @@ public class Pedido extends Base implements Calculable{
     private Usuario usuario;
 
     // Constructor
-    public Pedido(LocalDate fecha, Estado estado, FormatoPago formatoPago, Usuario usuario) {
+    public Pedido(LocalDate fecha, Estado estado, FormatoPago formatoPago) {
         super();
         // validar (filtro) que listaDetalles no esté vacio.
-        if(listaDetalles.isEmpty()){
-            throw new ListaDetallePedidoException("Debe agregar al menos un detalle al pedido.");
-        }
+//        if(listaDetalles.isEmpty()){
+//            throw new ListaDetallePedidoException("Debe agregar al menos un detalle al pedido.");
+//        }
 
         this.fecha = fecha;
         this.estado = estado;
-        this.total = calcularTotal(); // usa metodo calcularTotal()
+        this.total = 0.0;
         this.listaDetalles = new ArrayList<>();
         this.formatoPago = formatoPago;
-        this.usuario = usuario;
+        this.usuario = null;
     }
 
     // Getters
@@ -48,7 +48,9 @@ public class Pedido extends Base implements Calculable{
 
     //Setter
     public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+        if(usuario != null){
+            this.usuario = usuario;
+        }
     }
 
     // Metodos
@@ -58,12 +60,14 @@ public class Pedido extends Base implements Calculable{
         for (DetallePedido detalle:listaDetalles){
             t += detalle.getSubtotal();
         }
+        this.total = t; // Actualizamos el atributo "total" cada vez que lo calculamos
         return t;
     }
 
-    public void addDetallePedido(int cantidad, Producto producto ){
+    public void addDetallePedido(int cantidad, Producto producto){
         DetallePedido detallePedido = new DetallePedido(cantidad,producto);
         listaDetalles.add(detallePedido);
+        calcularTotal(); // Cada vez que agregamos un detalle, calculamos el total nuevamente
     }
 
     public DetallePedido findDetallePedidoByProducto(Producto producto){
@@ -82,8 +86,21 @@ public class Pedido extends Base implements Calculable{
             if(detallePedido.getProducto().equals(producto)){
                 System.out.println("Se pudo eliminar el detalle del pedido");
                 detallePedido.delete();
+                calcularTotal(); // Despues de eliminar un detallePedido del pedido, recalculamos el total
             }
         }
         System.out.println("No se pudo eliminar el detalle del pedido.");
+    }
+
+    @Override
+    public String toString(){
+        //Le agregamos un formato para que se vea un poco mas lindo por consola.
+        return String.format("Pedido ID: %s | Fecha: %s | Cliente: %-15s | Estado: %-10s | Pago: %-13s | Total: $%.2f",
+                this.id,
+                fecha,
+                this.usuario.getNombre(),
+                estado,
+                formatoPago,
+                total);
     }
 }

@@ -48,4 +48,10 @@ public class Producto extends Base{
     public Categoria getCategoria() {
         return categoria;
     }
+
+    //Metodos
+    @Override
+    public String toString() {
+        return "[ID: "+this.id+ "] "+this.nombre+" ("+this.categoria.getNombre()+") "+" - $"+this.precio+" / Stock: "+this.stock;
+    }
 }

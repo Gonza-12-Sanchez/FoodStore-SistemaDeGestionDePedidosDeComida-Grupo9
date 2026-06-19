@@ -2,6 +2,7 @@ package integrador.entities;
 
 import integrador.enums.Rol;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Usuario extends Base{
@@ -27,7 +28,7 @@ public class Usuario extends Base{
     }
 
     // constructor para usar cuando se obtenga desde la base de datos
-    public Usuario(String id_usuario,boolean eliminado,String createdAt,String nombre, String apellido, String email, String celular,String contrasenia, Rol rol) {
+    public Usuario(String id_usuario, boolean eliminado, LocalDateTime createdAt, String nombre, String apellido, String email, String celular, String contrasenia, Rol rol) {
         super(id_usuario,eliminado,createdAt);
         this.nombre = nombre;
         this.apellido = apellido;
@@ -62,5 +63,10 @@ public class Usuario extends Base{
             pedidos.add(pedido);
             pedido.setUsuario(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "[ID: "+this.id+ "] "+this.nombre+" "+this.apellido+" ("+this.rol+") "+" - email: "+this.email;
     }
 }
