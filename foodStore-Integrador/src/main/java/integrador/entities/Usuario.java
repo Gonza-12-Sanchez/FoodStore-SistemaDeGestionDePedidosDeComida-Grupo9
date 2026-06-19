@@ -10,18 +10,30 @@ public class Usuario extends Base{
     private String apellido;
     private String email;
     private String celular;
-    private String contraseña;
+    private String contrasenia;
     private Rol rol;
     private ArrayList<Pedido> pedidos;
 
     //Constructor
-    public Usuario(String nombre, String apellido, String email, String celular,String contraseña, Rol rol) {
+    public Usuario(String nombre, String apellido, String email, String celular,String contrasenia, Rol rol) {
         super();
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.celular = celular;
-        this.contraseña = contraseña;
+        this.contrasenia = contrasenia;
+        this.rol = rol;
+        this.pedidos = new ArrayList<>();
+    }
+
+    // constructor para usar cuando se obtenga desde la base de datos
+    public Usuario(String id_usuario,boolean eliminado,String createdAt,String nombre, String apellido, String email, String celular,String contrasenia, Rol rol) {
+        super(id_usuario,eliminado,createdAt);
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.celular = celular;
+        this.contrasenia = contrasenia;
         this.rol = rol;
         this.pedidos = new ArrayList<>();
     }
@@ -39,6 +51,7 @@ public class Usuario extends Base{
     public String getCelular() {
         return celular;
     }
+    public String getContrasenia(){return contrasenia;}
     public Rol getRol() {
         return rol;
     }

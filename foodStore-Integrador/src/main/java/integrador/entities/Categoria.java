@@ -14,7 +14,7 @@ public class Categoria extends Base{
         this.descripcion = descripcion;
     }
 
-    public Categoria(String id_categoria, boolean eliminado, LocalDateTime createdAt, String nombre, String descripcion){
+    public Categoria(String id_categoria, boolean eliminado, String createdAt, String nombre, String descripcion){
         super(id_categoria,eliminado,createdAt);
         this.nombre = nombre;
         this.descripcion = descripcion;
