@@ -1,0 +1,8 @@
+# Ignorar carpetas de compilación y del sistema
+target/
+.idea/
+*.iml
+
+# Ignorar bases de datos locales y archivos compilados
+*.db
+*.class
