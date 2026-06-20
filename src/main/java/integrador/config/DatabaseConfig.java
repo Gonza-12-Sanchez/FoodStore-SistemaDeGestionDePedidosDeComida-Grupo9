@@ -99,29 +99,25 @@ public class DatabaseConfig {
 
 
 
-    // TABLA INCOMPLETA HAY QUE TERMINAR
-
     public static void crearTablaProductos() {// --------------------------------------- Productos
         String sql = "CREATE TABLE IF NOT EXISTS productos ("
                 + "id_producto VARCHAR PRIMARY KEY,"
-                + "id_pedido VARCHAR NOT NULL,"
-                + "id_producto VARCHAR NOT NULL,"
-                + "cantidad INT NOT NULL,"
-                + "subtotal REAL NOT NULL," // maldito sql no tiene double
+                + "id_categoria VARCHAR NOT NULL,"
+                + "nombre VARCHAR NOT NULL,"
+                + "precio REAL NOT NULL,"
+                + "descripcion VARCHAR ,"
+                + "stock INT NOT NULL ,"
                 + "eliminado INTEGER NOT NULL,"
-                + "created_at TEXT NOT NULL"
-                + "FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido), "
-                + "FOREIGN KEY (id_producto) REFERENCES productos(id_producto)"
+                + "created_at TEXT NOT NULL,"
+                + "FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)"
                 + ");";
 
         try (Connection con = conectar();
              Statement stmt = con.createStatement() ) {
-
             stmt.execute(sql);
-            System.out.println("[DATABASE]: Tabla Detalles creada.");
-
+            System.out.println("[DATABASE]: Tabla Productos creada.");
         } catch (SQLException e) {
-            System.err.println("[ERROR]: Error al crear la tabla: " + e.getMessage());
+            System.err.println("[ERROR] " + e.getMessage());
         }
     }
 
