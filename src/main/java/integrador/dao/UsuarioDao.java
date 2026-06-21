@@ -13,12 +13,10 @@ public class UsuarioDao {
 
     public static boolean insertarUsuario(Usuario usuario){
         // query incompleta
-        String query = "INSERT INTO usuarios (id_usuario, nombre, apellido,email,celular,contraseña,rol, eliminado, created_at) VALUES (?,?,?,?,?,?,?,?,?)";
-
+        String query = "INSERT INTO usuarios (id_usuario, nombre, apellido,email,celular,contrasenia,rol, eliminado, created_at) VALUES (?,?,?,?,?,?,?,?,?)";
 
         // 1] conexion y statment
         try (Connection con = DatabaseConfig.conectar(); PreparedStatement pstmt = con.prepareStatement(query)) {
-
 
             // 2] completamos la query con los datos del objeto usuario
             pstmt.setString(1, usuario.getId());
@@ -48,7 +46,6 @@ public class UsuarioDao {
     public static ArrayList<Usuario> buscarPorNombre(String buscador) {
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
-
         String query = "SELECT id_usuario, nombre, apellido,email,celular,contraseña,rol, eliminado, created_at FROM usuarios WHERE nombre LIKE ?";
 
         try (Connection con = DatabaseConfig.conectar();
@@ -74,12 +71,12 @@ public class UsuarioDao {
                     boolean eliminado = rs.getBoolean("eliminado");
 
                     String fechaStr = rs.getString("created_at");
-                    LocalDateTime createdAt = LocalDateTime.parse(fechaStr); // Parseamos de String a LocalDateTime
+                    LocalDateTime createdAt = LocalDateTime.parse(fechaStr); // parseamos a LocalDateTime
 
 
                     Usuario usuario = new Usuario(id_usuario,eliminado,createdAt,nombre,apellido,email,celular,contrasenia,rol  );
 
-                    // 5. Agregamos el objeto a nuestra lista
+
                     listaUsuarios.add(usuario);
                 }
             }

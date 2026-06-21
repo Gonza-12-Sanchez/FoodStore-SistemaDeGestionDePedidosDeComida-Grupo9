@@ -1,5 +1,7 @@
 package integrador.entities;
 
+import java.time.LocalDateTime;
+
 public class Producto extends Base{
     //Atributos
     private String nombre;
@@ -29,6 +31,22 @@ public class Producto extends Base{
 
     }
 
+    public Producto(String id_producto, boolean eliminado , LocalDateTime createdAt,String nombre, double precio, String descripcion, int stock, String imagen,Categoria categoria){
+        super(id_producto,eliminado,createdAt);
+        this.nombre = nombre;
+        this.precio = precio;
+        this.descripcion = descripcion;
+        this.stock = stock;
+        this.imagen = imagen;
+        this.categoria = categoria;
+
+        if (stock >0){
+            this.disponible = true;
+        }else{
+            this.disponible = false;
+        }
+    }
+
     // Getters
     public String getNombre() {
         return nombre;
@@ -41,6 +59,9 @@ public class Producto extends Base{
     }
     public int getStock() {
         return stock;
+    }
+    public String getImagen() {
+        return imagen;
     }
     public boolean isDisponible() {
         return disponible;
