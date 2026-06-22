@@ -44,7 +44,6 @@ public class Pedido extends Base implements Calculable {
     }
 
 
-
     // Getters
     public LocalDate getFecha() {
         return fecha;
