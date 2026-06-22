@@ -1,3 +1,4 @@
+import integrador.config.DatabaseConfig;
 import integrador.menus.MenuCategoria;
 import integrador.menus.MenuPedido;
 import integrador.menus.MenuProducto;
@@ -11,6 +12,14 @@ public class Main{
 
     public static void main(String[] args) {
         //Realizamos el menu de opciones
+
+        DatabaseConfig.crearTablaUsuarios();
+        DatabaseConfig.crearTablaProductos();
+        DatabaseConfig.crearTablaPedido();
+        DatabaseConfig.crearTablaCategorias();
+        DatabaseConfig.crearTablaDetalles();
+
+
         int opcion;
         do{
             //Mostramos el menu
