@@ -2,6 +2,8 @@ package integrador.entities;
 
 import integrador.exception.CantidadInvalidaException;
 
+import java.time.LocalDateTime;
+
 public class DetallePedido extends Base implements Calculable{
     //Atributos
     private int cantidad;
@@ -14,14 +16,28 @@ public class DetallePedido extends Base implements Calculable{
 
         if(cantidad <= 0){
             throw new CantidadInvalidaException("La cantidad ingresada es invalida. Esta tiene que ser mayor a 0");
-
         }
 
         this.cantidad = cantidad;
         this.producto = producto;
         this.subtotal = calcularTotal();
+    }
+
+    //Constructor completo
+    public DetallePedido(String id_detalle, boolean eliminado, LocalDateTime cratedAt, int cantidad, double subtotal, Producto producto) {
+        super(id_detalle,eliminado,cratedAt);
+
+        if(cantidad <= 0){
+            throw new CantidadInvalidaException("La cantidad ingresada es invalida. Esta tiene que ser mayor a 0");
+        }
+
+        this.cantidad = cantidad;
+        this.producto = producto;
+
+        this.subtotal = calcularTotal();
 
     }
+
 
     // Getters
     public int getCantidad() {

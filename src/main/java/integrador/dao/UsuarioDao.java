@@ -13,12 +13,10 @@ public class UsuarioDao {
 
     public static boolean insertarUsuario(Usuario usuario){
         // query incompleta
-        String query = "INSERT INTO usuarios (id_usuario, nombre, apellido,email,celular,contraseña,rol, eliminado, created_at) VALUES (?,?,?,?,?,?,?,?,?)";
-
+        String query = "INSERT INTO usuarios (id_usuario, nombre, apellido,email,celular,contrasenia,rol, eliminado, created_at) VALUES (?,?,?,?,?,?,?,?,?)";
 
         // 1] conexion y statment
         try (Connection con = DatabaseConfig.conectar(); PreparedStatement pstmt = con.prepareStatement(query)) {
-
 
             // 2] completamos la query con los datos del objeto usuario
             pstmt.setString(1, usuario.getId());
@@ -48,7 +46,6 @@ public class UsuarioDao {
     public static ArrayList<Usuario> buscarPorNombre(String buscador) {
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
-
         String query = "SELECT id_usuario, nombre, apellido,email,celular,contraseña,rol, eliminado, created_at FROM usuarios WHERE nombre LIKE ?";
 
         try (Connection con = DatabaseConfig.conectar();
@@ -74,12 +71,12 @@ public class UsuarioDao {
                     boolean eliminado = rs.getBoolean("eliminado");
 
                     String fechaStr = rs.getString("created_at");
-                    LocalDateTime createdAt = LocalDateTime.parse(fechaStr); // Parseamos de String a LocalDateTime
+                    LocalDateTime createdAt = LocalDateTime.parse(fechaStr); // parseamos a LocalDateTime
 
 
                     Usuario usuario = new Usuario(id_usuario,eliminado,createdAt,nombre,apellido,email,celular,contrasenia,rol  );
 
-                    // 5. Agregamos el objeto a nuestra lista
+
                     listaUsuarios.add(usuario);
                 }
             }
@@ -91,5 +88,71 @@ public class UsuarioDao {
         return listaUsuarios;
     }
 
+    public static ArrayList<Usuario> obtenerTodos() {
+        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+        String query = "SELECT id_usuario, eliminado, created_at, nombre, apellido, email, celular, contrasenia, rol FROM usuarios WHERE eliminado = 0";
+
+        try (Connection con = DatabaseConfig.conectar();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+
+                Usuario usuario = new Usuario(
+                        rs.getString("id_usuario"),
+                        rs.getBoolean("eliminado"),
+                        LocalDateTime.parse(rs.getString("created_at")),
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        rs.getString("email"),
+                        rs.getString("celular"),
+                        rs.getString("contrasenia"),
+                        Rol.valueOf(rs.getString("rol").toUpperCase())
+                );
+
+                listaUsuarios.add(usuario);
+            }
+        } catch (SQLException err) {
+            System.err.println("[Error al obtener todos los usuarios]: " + err.getMessage());
+        }
+
+        return listaUsuarios;
+    }
+
+    public static boolean actualizarNombreYApellido(String idUsuario, String nuevoNombre, String nuevoApellido) {
+        String query = "UPDATE usuarios SET nombre = ?, apellido = ? WHERE id_usuario = ?";
+
+        try (Connection con = DatabaseConfig.conectar();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+
+            pstmt.setString(1, nuevoNombre);
+            pstmt.setString(2, nuevoApellido);
+            pstmt.setString(3, idUsuario);
+
+            int filasAfectadas = pstmt.executeUpdate();
+
+            return filasAfectadas > 0;
+        } catch (SQLException err) {
+            System.err.println("[Error al actualizar el usuario " + idUsuario + "]: " + err.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean eliminar(String idUsuario) {
+        String query = "UPDATE usuarios SET eliminado = 1 WHERE id_usuario = ?";
+
+        try (Connection con = DatabaseConfig.conectar();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+
+            pstmt.setString(1, idUsuario);
+
+            int filasAfectadas = pstmt.executeUpdate();
+
+            return filasAfectadas > 0;
+        } catch (SQLException err) {
+            System.err.println("[Error al dar de baja el usuario " + idUsuario + "]: " + err.getMessage());
+            return false;
+        }
+    }
 
 }

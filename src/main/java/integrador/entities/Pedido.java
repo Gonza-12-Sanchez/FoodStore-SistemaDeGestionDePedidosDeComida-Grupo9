@@ -4,9 +4,10 @@ import integrador.enums.Estado;
 import integrador.enums.FormatoPago;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Pedido extends Base implements Calculable{
+public class Pedido extends Base implements Calculable {
     //Atributos
     private LocalDate fecha;
     private Estado estado;
@@ -15,19 +16,34 @@ public class Pedido extends Base implements Calculable{
     private ArrayList<DetallePedido> listaDetalles;
     private Usuario usuario;
 
+
     // Constructor
-    public Pedido(LocalDate fecha, Estado estado, FormatoPago formatoPago) {
+
+    public Pedido(FormatoPago formatoPago) {
         super();
 
-        this.fecha = fecha;
-        this.estado = estado;
+        this.fecha = LocalDate.now().plusDays(3); // tres dias en el futuro por defecto
+        this.estado = Estado.PENDIENTE;
         this.total = 0.0;
         this.listaDetalles = new ArrayList<>();
         this.formatoPago = formatoPago;
         this.usuario = null;
     }
 
-    public Pedido() {}
+
+    // Constructor completo
+    public Pedido(String id_pedido, boolean eliminado, LocalDateTime cratedAt,LocalDate fecha, Estado estado, double total, ArrayList<DetallePedido> listaDetalles,  FormatoPago formatoPago, Usuario usuario) {
+        super(id_pedido,eliminado,cratedAt);
+
+        this.fecha = fecha;
+        this.estado = estado;
+        this.total = total;
+        this.listaDetalles = listaDetalles;
+        this.formatoPago = formatoPago;
+        this.usuario = usuario;
+    }
+
+
 
     // Getters
     public LocalDate getFecha() {
@@ -42,7 +58,10 @@ public class Pedido extends Base implements Calculable{
     public FormatoPago getFormatoPago() {
         return formatoPago;
     }
+
     public ArrayList<DetallePedido> getListaDetalles() { return listaDetalles; }
+
+    public Usuario getUsuario(){return usuario;}
 
     //Setter
     public void setUsuario(Usuario usuario) {

@@ -15,7 +15,6 @@ public class CategoriaDao {
         // query incompleta
         String query = "INSERT INTO categorias (id_categoria, nombre, descripcion, eliminado, created_at) VALUES (?, ?, ?, ?, ?)";
 
-
         // 1] conexion y statment
         try (Connection con = DatabaseConfig.conectar();PreparedStatement pstmt = con.prepareStatement(query)) {
 
@@ -41,19 +40,17 @@ public class CategoriaDao {
 
     public static ArrayList<Categoria> obtenerTodas() {
         ArrayList<Categoria> listaCategorias = new ArrayList<>();
-        String query = "SELECT id_categoria,created_at, eliminado,nombre,descripcion FROM categorias";
+        String query = "SELECT id_categoria,created_at, eliminado,nombre,descripcion FROM categorias WHERE eliminado = 0";
 
         try (Connection con = DatabaseConfig.conectar();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
-
-                // Extraemos los datos de la fila actual
                 String id = rs.getString("id_categoria");
 
                 String fechaStr = rs.getString("created_at");
-                LocalDateTime createdAt = LocalDateTime.parse(fechaStr); // Parseamos de String a LocalDateTime
+                LocalDateTime createdAt = LocalDateTime.parse(fechaStr);
 
                 boolean eliminado = rs.getBoolean("eliminado");
 
@@ -61,21 +58,66 @@ public class CategoriaDao {
                 String descripcion = rs.getString("descripcion");
 
 
-
-                // 4. Creamos el objeto Categoria usando el constructor completo
                 Categoria categoria = new Categoria(id,eliminado,createdAt, nombre, descripcion );
 
-                // 5. Agregamos el objeto a nuestra lista
                 listaCategorias.add(categoria);
             }
 
         } catch (SQLException err) {
             System.err.println("[Error al obtener todas las categorías]: " + err.getMessage());
         }
-
         return listaCategorias;
     }
 
+    public static boolean editarCategoria(String idCategoria, String nuevoNombre, String nuevaDescripcion) {
+        String query = "UPDATE categorias SET nombre = ?, descripcion = ? WHERE id_categoria = ?";
 
+        try (Connection con = DatabaseConfig.conectar();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+
+            pstmt.setString(1, nuevoNombre);
+            pstmt.setString(2, nuevaDescripcion);
+            pstmt.setString(3, idCategoria);
+
+            int filasAfectadas = pstmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                System.out.println("[BD]: Categoría con ID " + idCategoria + " actualizada con éxito.");
+                return true;
+            } else {
+                System.out.println("[BD]: No se encontró ninguna esa categoría");
+                return false;
+            }
+
+        } catch (SQLException err) {
+            System.err.println("[Error al editar categoría]: " + err.getMessage());
+            return false;
+        }
+    }
+
+
+    public static boolean eliminarCategoria(String idCategoria) {
+        String query = "UPDATE categorias SET eliminado = 1 WHERE id_categoria = ?";
+
+        try (Connection con = DatabaseConfig.conectar();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+
+            pstmt.setString(1, idCategoria);
+
+            int filasAfectadas = pstmt.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                System.out.println("[BD]: Categoría eliminada.");
+                return true;
+            } else {
+                System.out.println("[BD]: No se encontró la categoría.");
+                return false;
+            }
+
+        } catch (SQLException err) {
+            System.err.println("[Error al eliminar categoría]: " + err.getMessage());
+            return false;
+        }
+    }
 
 }
