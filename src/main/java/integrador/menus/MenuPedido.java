@@ -52,7 +52,7 @@ public class MenuPedido {
         FormatoPago formatoPago = seleccionarFormatoPago();
 
         //Instanciamos un nuevo pedido (por defecto se crea como PENDIENTE y con la fecha actual)
-        Pedido nuevoPedido = new Pedido(LocalDate.now(), Estado.PENDIENTE, formatoPago);
+        Pedido nuevoPedido = new Pedido(formatoPago);
         nuevoPedido.setUsuario(cliente);
 
         boolean seguirComprando = true;

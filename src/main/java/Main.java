@@ -171,7 +171,7 @@ public class Main{
                     MenuPedido.listarPedidos();
                     break;
                 case 2:
-                    MenuPedido.crearPedidoConDetalles();
+                    MenuPedido.crearPedido();
                     break;
                 case 3:
                     MenuPedido.editarPedido();
