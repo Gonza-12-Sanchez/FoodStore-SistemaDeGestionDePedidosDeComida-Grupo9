@@ -15,7 +15,6 @@ public class CategoriaDao {
         // query incompleta
         String query = "INSERT INTO categorias (id_categoria, nombre, descripcion, eliminado, created_at) VALUES (?, ?, ?, ?, ?)";
 
-
         // 1] conexion y statment
         try (Connection con = DatabaseConfig.conectar();PreparedStatement pstmt = con.prepareStatement(query)) {
 
@@ -41,7 +40,7 @@ public class CategoriaDao {
 
     public static ArrayList<Categoria> obtenerTodas() {
         ArrayList<Categoria> listaCategorias = new ArrayList<>();
-        String query = "SELECT id_categoria,created_at, eliminado,nombre,descripcion FROM categorias";
+        String query = "SELECT id_categoria,created_at, eliminado,nombre,descripcion FROM categorias WHERE eliminado = 0";
 
         try (Connection con = DatabaseConfig.conectar();
              Statement stmt = con.createStatement();

@@ -28,6 +28,7 @@ public class Main_pruebas {
             System.out.println(p.getNombre()+" --> "+p.getDescripcion());
         }
 
+
         DatabaseConfig.crearTablaPedido();
         DatabaseConfig.crearTablaDetalles();
 
@@ -44,6 +45,11 @@ public class Main_pruebas {
 
         for (Pedido p: PedidoDao.obtenerTodos()){
             System.out.println(p.toString());
+        }
+
+
+        for (Producto p: ProductoDao.obtenerTodos()){
+            System.out.println(p.getNombre()+" --> "+p.getDescripcion());
         }
 
 

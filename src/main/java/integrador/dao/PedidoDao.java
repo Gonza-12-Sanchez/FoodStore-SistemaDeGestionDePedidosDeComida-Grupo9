@@ -17,10 +17,8 @@ public class PedidoDao {
         // query incompleta
         String query = "INSERT INTO pedidos (id_pedido, fecha,estado,total,formato_pago,id_usuario, eliminado, created_at) VALUES (?,?,?,?,?,?,?,?)";
 
-
         // 1] conexion y statment
         try (Connection con = DatabaseConfig.conectar(); PreparedStatement pstmt = con.prepareStatement(query)) {
-
 
             // 2] completamos la query con los datos del objeto usuario
             pstmt.setString(1, pedido.getId());
@@ -42,14 +40,12 @@ public class PedidoDao {
         } catch (SQLException err) {
             System.err.println("[!] Error al insertar " + err.getMessage());
             return false;
-
         }
     }
 
     public static ArrayList<Pedido> obtenerTodos() {
         ArrayList<Pedido> listaPedidos = new ArrayList<>();
 
-        // 1. Query principal con JOIN para traer los datos del Pedido y su Usuario
         String query = "SELECT p.id_pedido, p.fecha, p.estado, p.total, p.formato_pago, p.eliminado, p.created_at, "
                 + "u.id_usuario, u.nombre AS u_nombre, u.apellido AS u_apellido, u.email AS u_email,u.celular AS u_celular,u.contrasenia AS u_contrasenia, u.rol AS u_rol,u.eliminado AS u_eliminado, u.created_at AS u_created_at "
                 + "FROM pedidos p "
@@ -84,8 +80,6 @@ public class PedidoDao {
                 boolean eliminado = rs.getBoolean("eliminado");
                 LocalDateTime createdAt = LocalDateTime.parse(rs.getString("created_at"));
 
-
-
                 ArrayList<DetallePedido> detalles = obtenerDetallesDePedido(idPedido, con);
                 Pedido pedido = new Pedido(idPedido, eliminado, createdAt,fecha, estado, total,detalles, formatoPago , usuario );
 
@@ -95,7 +89,6 @@ public class PedidoDao {
         } catch (SQLException err) {
             System.err.println("[Error al obtener todos los pedidos]: " + err.getMessage());
         }
-
         return listaPedidos;
     }
 
@@ -103,7 +96,6 @@ public class PedidoDao {
     private static ArrayList<DetallePedido> obtenerDetallesDePedido(String idPedido, Connection con) throws SQLException {
         ArrayList<DetallePedido> listaDetalles = new ArrayList<>();
 
-        // Seleccionamos absolutamente todos los campos necesarios usando alias para evitar colisiones de nombres
         String queryDetalles = "SELECT "
                 + "d.id_detalle, d.cantidad, d.subtotal, d.eliminado AS det_eliminado, d.created_at AS det_created, "
                 + "p.id_producto, p.nombre AS prod_nombre, p.precio AS prod_precio, p.descripcion AS prod_desc, p.stock AS prod_stock, p.imagen AS prod_img, p.eliminado AS prod_eliminado, p.created_at AS prod_created, "
@@ -119,7 +111,6 @@ public class PedidoDao {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
 
-                    // 1. Reconstruimos el objeto Categoria usando su constructor completo
                     String catId = rs.getString("id_categoria");
                     boolean catEliminado = rs.getBoolean("cat_eliminado");
                     LocalDateTime catCreated = LocalDateTime.parse(rs.getString("cat_created"));
@@ -128,7 +119,6 @@ public class PedidoDao {
 
                     Categoria categoria = new Categoria(catId, catEliminado, catCreated, catNombre, catDesc);
 
-                    // 2. Reconstruimos el objeto Producto usando su constructor completo e inyectando la categoría
                     String prodId = rs.getString("id_producto");
                     boolean prodEliminado = rs.getBoolean("prod_eliminado");
                     LocalDateTime prodCreated = LocalDateTime.parse(rs.getString("prod_created"));
@@ -139,7 +129,6 @@ public class PedidoDao {
                     String prodImg = rs.getString("prod_img");
 
                     Producto producto = new Producto(prodId, prodEliminado, prodCreated, prodNombre, prodPrecio, prodDesc, prodStock, prodImg, categoria);
-
 
                     DetallePedido detalle = new DetallePedido(
                             rs.getString("id_detalle"),
@@ -156,5 +145,45 @@ public class PedidoDao {
         }
         return listaDetalles;
     }
+
+    public static boolean actualizarEstadoYPago(String id_pedido, Estado estado, FormatoPago formato_pago) {
+        String query = "UPDATE pedidos SET estado = ?, formato_pago = ? WHERE id_pedido = ?";
+
+        try (Connection con = DatabaseConfig.conectar();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+
+            pstmt.setString(1, estado.name());
+            pstmt.setString(2, formato_pago.name());
+
+            pstmt.setString(3, id_pedido);
+
+            int filasAfectadas = pstmt.executeUpdate();
+
+            return filasAfectadas > 0;
+
+        } catch (SQLException err) {
+            System.err.println("[Error al actualizar el pedido " + id_pedido + "]: " + err.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean eliminar(String idPedido) {
+        String query = "UPDATE pedidos SET eliminado = 1 WHERE id_pedido = ?";
+
+        try (Connection con = DatabaseConfig.conectar();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+
+            pstmt.setString(1, idPedido);
+
+            int filasAfectadas = pstmt.executeUpdate();
+
+            return filasAfectadas > 0;
+
+        } catch (SQLException err) {
+            System.err.println("[Error al dar de baja el pedido " + idPedido + "]: " + err.getMessage());
+            return false;
+        }
+    }
+
 
 }

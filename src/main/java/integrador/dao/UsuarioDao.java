@@ -88,5 +88,71 @@ public class UsuarioDao {
         return listaUsuarios;
     }
 
+    public static ArrayList<Usuario> obtenerTodos() {
+        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+        String query = "SELECT id_usuario, eliminado, created_at, nombre, apellido, email, celular, contrasenia, rol FROM usuarios WHERE eliminado = 0";
+
+        try (Connection con = DatabaseConfig.conectar();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+
+                Usuario usuario = new Usuario(
+                        rs.getString("id_usuario"),
+                        rs.getBoolean("eliminado"),
+                        LocalDateTime.parse(rs.getString("created_at")),
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        rs.getString("email"),
+                        rs.getString("celular"),
+                        rs.getString("contrasenia"),
+                        Rol.valueOf(rs.getString("rol").toUpperCase())
+                );
+
+                listaUsuarios.add(usuario);
+            }
+        } catch (SQLException err) {
+            System.err.println("[Error al obtener todos los usuarios]: " + err.getMessage());
+        }
+
+        return listaUsuarios;
+    }
+
+    public static boolean actualizarNombreYApellido(String idUsuario, String nuevoNombre, String nuevoApellido) {
+        String query = "UPDATE usuarios SET nombre = ?, apellido = ? WHERE id_usuario = ?";
+
+        try (Connection con = DatabaseConfig.conectar();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+
+            pstmt.setString(1, nuevoNombre);
+            pstmt.setString(2, nuevoApellido);
+            pstmt.setString(3, idUsuario);
+
+            int filasAfectadas = pstmt.executeUpdate();
+
+            return filasAfectadas > 0;
+        } catch (SQLException err) {
+            System.err.println("[Error al actualizar el usuario " + idUsuario + "]: " + err.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean eliminar(String idUsuario) {
+        String query = "UPDATE usuarios SET eliminado = 1 WHERE id_usuario = ?";
+
+        try (Connection con = DatabaseConfig.conectar();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+
+            pstmt.setString(1, idUsuario);
+
+            int filasAfectadas = pstmt.executeUpdate();
+
+            return filasAfectadas > 0;
+        } catch (SQLException err) {
+            System.err.println("[Error al dar de baja el usuario " + idUsuario + "]: " + err.getMessage());
+            return false;
+        }
+    }
 
 }
