@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ProductoDao {
 
-    public static boolean insertarProcuto(Producto producto) {
+    public static boolean insertarProducto(Producto producto) {
         String query = "INSERT INTO productos (id_producto,id_categoria,nombre,precio,descripcion,stock,imagen,eliminado,created_at) VALUES (?,?,?,?,?,?,?,?,?)";
         try (Connection con = DatabaseConfig.conectar(); PreparedStatement pstmt = con.prepareStatement(query)) {
 

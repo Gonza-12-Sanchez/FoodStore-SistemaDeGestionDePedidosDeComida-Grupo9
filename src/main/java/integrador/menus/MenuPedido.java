@@ -19,8 +19,7 @@ public class MenuPedido {
     //Dicha clase contiene toda la logica del submenu de pedido
 
     //Atributos
-    //private static ArrayList<Pedido> pedidosDB = PedidoDao.obtenerTodas();
-    private static ArrayList<Pedido> pedidosDB =  new ArrayList<>();
+    private static ArrayList<Pedido> pedidosDB = PedidoDao.obtenerTodos();
 
     //----ARMAMOS UN METODO POR CADA OPCION DEL MENU----
     //Metodo listar
@@ -97,12 +96,12 @@ public class MenuPedido {
         double totalFinalPedido = nuevoPedido.calcularTotal();
 
         //Con la ayuda de un metodo insertamos el pedido a la BD
-        //PedidoDao.insertarPedido(nuevoPedido);
+        PedidoDao.insertarPedido(nuevoPedido);
         System.out.println("\nPedido registrado correctamente.");
         System.out.println("Total a pagar: $" + totalFinalPedido);
 
         //Actualizamos la lista de pedidosBD
-        //pedidosDB = PedidoDao.obtenerTodos();
+        pedidosDB = PedidoDao.obtenerTodos();
     }
 
     //Metodo editar
@@ -133,11 +132,11 @@ public class MenuPedido {
         }
 
         //Llamamos a un metodo para actualizar el pedido
-        //PedidoDao.editarPedido(pedido);
+        PedidoDao.editarPedido(pedido.getId(), pedido.getEstado(), pedido.getFormatoPago());
         System.out.println("Pedido actualizado correctamente en la base de datos.");
 
         //Actualizamos la lista pedidosDB
-        //pedidosDB = PedidoDao.obtenerTodos();
+        pedidosDB = PedidoDao.obtenerTodos();
     }
 
     //Metodo eliminar
@@ -157,11 +156,11 @@ public class MenuPedido {
         //De ser asi, lo eliminamos. Sino no
         if (confirmacion.equalsIgnoreCase("S")) {
             //Llamamos a un metodo para eliminar al pedido pasandole el ID
-            //PedidoDao.eliminarPedido(pedido.getId());
+            PedidoDao.eliminar(pedido.getId());
             System.out.println("Pedido eliminado lógicamente de forma correcta.");
 
             //Actualizamos la lista pedidosDB
-            //pedidosDB = PedidoDao.obtenerTodos();
+            pedidosDB = PedidoDao.obtenerTodos();
         } else {
             System.out.println("Operación cancelada.");
         }

@@ -1,5 +1,6 @@
 package integrador.menus;
 
+import integrador.dao.UsuarioDao;
 import integrador.entities.Usuario;
 import integrador.enums.Rol;
 import integrador.exception.ValidacionesDeEntrada;
@@ -10,8 +11,7 @@ public class MenuUsuario {
     //Dicha clase contiene toda la logica del submenu de producto
 
     //Atributos
-    //private static ArrayList<Usuario> usuariosDB = UsuarioDao.obtenerTodos();
-    private static ArrayList<Usuario> usuariosDB = new ArrayList<>();
+    private static ArrayList<Usuario> usuariosDB = UsuarioDao.obtenerTodos();
 
     //----ARMAMOS UN METODO POR CADA OPCION DEL MENU----
     //Metodo listar
@@ -53,11 +53,11 @@ public class MenuUsuario {
 
         //Realizamos la creacion del usuario y lo insertamos a la BD
         Usuario usuarioNuevo = new Usuario(nombre, apellido, email, celular, contrasenia, rol);
-        //UsuarioDao.insertarUsuario(usuarioNuevo);
+        UsuarioDao.insertarUsuario(usuarioNuevo);
         System.out.println("Usuario creado con ID: " + usuarioNuevo.getId());
 
         //Actualizamos la lista usuariosDB
-        //usuariosDB = UsuarioDao.obtenerTodos();
+        usuariosDB = UsuarioDao.obtenerTodos();
     }
 
     //Metodo editar
@@ -108,7 +108,7 @@ public class MenuUsuario {
         System.out.println("Usuario actualizado correctamente.");
 
         //Actualizamos la lista usuariosDB
-        //usuariosDB = UsuarioDao.obtenerTodos();
+        usuariosDB = UsuarioDao.obtenerTodos();
     }
 
     //Metodo eliminar
@@ -128,11 +128,11 @@ public class MenuUsuario {
         //De ser asi, lo eliminamos. Sino no
         if (confirmacion.equalsIgnoreCase("S")) {
             //Llamamos a un metodo para eliminar al usuario pasandole el ID
-            //UsuarioDao.eliminarUsuario(usuario.getId());
+            UsuarioDao.eliminar(usuario.getId());
             System.out.println("Usuario eliminado correctamente.");
 
             //Actualizamos la lista usuariosDB
-            //usuariosDB = UsuarioDao.obtenerTodos();
+            usuariosDB = UsuarioDao.obtenerTodos();
         } else {
             System.out.println("Operación cancelada.");
         }

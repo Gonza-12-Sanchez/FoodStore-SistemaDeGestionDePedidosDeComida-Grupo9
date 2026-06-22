@@ -20,9 +20,9 @@ public class Main_pruebas {
         Producto prod = new Producto("Cocacola",15.0,"coca loca de 1 litro",5,"imagen",cat);
         Producto prod2 = new Producto("Pepsi 350ml",20.0,"Pepsi cola 350 miligramos",20,"imagen",cat);
         Producto prod3 = new Producto("Pepsi 1.5l",10.0,"Pepsi cola 1.5 litros",10,"imagen",cat);
-        ProductoDao.insertarProcuto(prod);
-        ProductoDao.insertarProcuto(prod2);
-        ProductoDao.insertarProcuto(prod3);
+        ProductoDao.insertarProducto(prod);
+        ProductoDao.insertarProducto(prod2);
+        ProductoDao.insertarProducto(prod3);
 
         for (Producto p: ProductoDao.buscarPorNombre("eps")){
             System.out.println(p.getNombre()+" --> "+p.getDescripcion());

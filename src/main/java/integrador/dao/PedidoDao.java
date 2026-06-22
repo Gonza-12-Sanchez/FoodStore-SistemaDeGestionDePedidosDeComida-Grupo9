@@ -27,7 +27,7 @@ public class PedidoDao {
             pstmt.setDouble(4, pedido.getTotal());
             pstmt.setString(5, pedido.getFormatoPago().name());
             pstmt.setString(6, pedido.getUsuario().getId());
-            pstmt.setBoolean(7, pedido.isEliminado());
+            pstmt.setBoolean(7, pedido.getEliminado());
             pstmt.setString(8, pedido.getCreatedAt().toString());
 
 
@@ -146,7 +146,7 @@ public class PedidoDao {
         return listaDetalles;
     }
 
-    public static boolean actualizarEstadoYPago(String id_pedido, Estado estado, FormatoPago formato_pago) {
+    public static boolean editarPedido(String id_pedido, Estado estado, FormatoPago formato_pago) {
         String query = "UPDATE pedidos SET estado = ?, formato_pago = ? WHERE id_pedido = ?";
 
         try (Connection con = DatabaseConfig.conectar();

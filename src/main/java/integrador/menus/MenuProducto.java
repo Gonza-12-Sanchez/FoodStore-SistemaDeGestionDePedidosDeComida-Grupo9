@@ -2,6 +2,7 @@ package integrador.menus;
 
 
 import integrador.dao.CategoriaDao;
+import integrador.dao.ProductoDao;
 import integrador.entities.Categoria;
 import integrador.entities.Producto;
 import integrador.exception.ValidacionesDeEntrada;
@@ -12,8 +13,7 @@ public class MenuProducto {
     //Dicha clase contiene toda la logica del submenu de producto
 
     //Atributos
-    //private static ArrayList<Producto> productosDB = ProductoDao.obtenerTodos();
-    private static ArrayList<Producto>  productosDB = new ArrayList<>();
+    private static ArrayList<Producto> productosDB = ProductoDao.obtenerTodos();
 
     //----ARMAMOS UN METODO POR CADA OPCION DEL MENU----
     //Metodo listar
@@ -56,11 +56,11 @@ public class MenuProducto {
 
         //Con todos los datos necesarios, procedemos a crear el producto y la insertamos en la BD
         Producto nuevo = new Producto(nombre, precio, descripcion, stock, imagen, categoria);
-        //ProductoDao.insertarProducto(nuevo);
+        ProductoDao.insertarProducto(nuevo);
         System.out.println("Producto creado con ID: " + nuevo.getId());
 
         //Actualizamos la lista productosBD
-        //productosDB = ProductoDao.obtenerTodos();
+        productosDB = ProductoDao.obtenerTodos();
     }
 
     //Metodo editar
@@ -141,7 +141,7 @@ public class MenuProducto {
         System.out.println("Producto actualizado correctamente.");
 
         //Actualizamos la lista productosDB
-        //productosDB = ProductoDao.obtenerTodos();
+        productosDB = ProductoDao.obtenerTodos();
     }
 
     //Metodo eliminar
@@ -162,10 +162,10 @@ public class MenuProducto {
         //De ser asi, lo eliminamos. Sino no
         if (confirmacion.equalsIgnoreCase("S")) {
             //Llamamos a un metodo para eliminar al producto, pasandole el ID
-            //ProductoDao.eliminarProducto(producto.getId());
+            ProductoDao.eliminar(producto.getId());
 
             //Actualizamos la lista productosBD
-            //productosDB = ProductoDao.obtenerTodos();
+            productosDB = ProductoDao.obtenerTodos();
 
             System.out.println("Producto eliminado correctamente.");
         } else {

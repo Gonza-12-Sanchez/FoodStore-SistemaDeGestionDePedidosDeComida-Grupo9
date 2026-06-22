@@ -78,7 +78,7 @@ public class MenuCategoria {
         String descripcionCategoria = ValidacionesDeEntrada.ingresarOpcionNoVacia("Descripcion de la categoria: ");
 
         //Llamamos a un metodo para actualizar la categoria
-        //CategoriaDao.editarCategoria(nombreCategoria,descripcionCategoria,categoria.getId());
+        CategoriaDao.editarCategoria(categoria.getId(),nombreCategoria,descripcionCategoria);
         System.out.println("Categoria actualizada correctamente.");
 
         //Actualizamos la lista categoriasDB
@@ -103,7 +103,7 @@ public class MenuCategoria {
         //De ser asi, la eliminamos. Sino no
         if (confirmacion.equalsIgnoreCase("S")) {
             //Llamamos a un metodo para eliminar la categoria, pasandole el ID
-            //CategoriaDao.eliminarCategoria(categoria.getId());
+            CategoriaDao.eliminarCategoria(categoria.getId());
 
             //Actualizamos la lista categoriasBD
             actualizarListaDB();
