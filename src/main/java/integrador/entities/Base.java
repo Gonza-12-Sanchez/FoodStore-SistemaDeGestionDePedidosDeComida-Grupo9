@@ -25,7 +25,7 @@ public abstract class Base {
 
     //Getters
     public String getId() {return id;}
-    public boolean isEliminado() {return eliminado;}
+    public boolean getEliminado() {return eliminado;}
     public LocalDateTime getCreatedAt() {return createdAt;}
 
     //Metodos

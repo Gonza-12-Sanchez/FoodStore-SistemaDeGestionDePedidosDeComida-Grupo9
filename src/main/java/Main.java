@@ -1,37 +1,18 @@
-import integrador.config.DatabaseConfig;
-import integrador.dao.CategoriaDao;
-import integrador.dao.UsuarioDao;
-import integrador.entities.Categoria;
-import integrador.entities.Pedido;
-import integrador.entities.Producto;
-import integrador.entities.Usuario;
-import integrador.enums.Rol;
+import integrador.menus.MenuCategoria;
+import integrador.menus.MenuPedido;
+import integrador.menus.MenuProducto;
+import integrador.menus.MenuUsuario;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Scanner;
+
+import static integrador.exception.ValidacionesDeEntrada.ingresarEntero;
 
 
 public class Main{
 
-    //Instanciamos el scanner
-    private static Scanner scanner = new Scanner(System.in);
-
-
-    //Simulamos tener ya conexion con base de datos para realizar pruebas sobre el menu
-    //A esta simulacion lo hacemos con las siguientes arrayList
-    private static ArrayList<Categoria> categoriasDB = new ArrayList<>();
-    private static ArrayList<Producto> productosDB = new ArrayList<>();
-    private static ArrayList<Usuario> usuariosDB = new ArrayList<>();
-    private static ArrayList<Pedido> pedidosDB = new ArrayList<>();
-    
     public static void main(String[] args) {
-//        for(Usuario usuario : UsuarioDao.buscarPorNombre("it")){
-//            System.out.println(usuario.getId()+" "+usuario.getNombre());
-//        }
         //Realizamos el menu de opciones
-        int opcion = -1;
-        while (opcion != 0){
+        int opcion;
+        do{
             //Mostramos el menu
             System.out.println("=== SISTEMA DE PEDIDOS (FOOD STORE) ===");
             System.out.println("1. Categorías");
@@ -40,6 +21,12 @@ public class Main{
             System.out.println("4. Pedidos");
             System.out.println("0. Salir");
             opcion = ingresarEntero("Ingrese una opcion: ");
+
+            //Validamos que la opcion ingresada sea correcta
+            while(opcion < 0 || opcion > 4){
+                System.out.println("[ERROR] Opcion invalida. Ingrese un numero del 0 al 4");
+                opcion = ingresarEntero("Seleccione una opcion: ");
+            }
 
             //Realizamos la opcion ingresada
             switch (opcion){
@@ -51,77 +38,148 @@ public class Main{
                     break;
                 case 3:
                     submenuUsuario();
+                    break;
                 case 4:
                     submenuPedido();
                     break;
-                default:
-                    System.out.println("Opcion ingresada invalida...");
             }
-            scanner.close();
-        }
+        }while (opcion != 0);
     }
+
     //Armamos un metodo aparte por cada submenu
     public static void submenuCategoria(){
-        int opcion = -1;
-        while (opcion != 0){
+        int opcion;
+        do{
             System.out.println("-- GESTION DE CATEGORIAS --");
-            System.out.println("1. Listar categorías");
-            System.out.println("2. Crear categoría");
-            System.out.println("3. Editar categoría");
-            System.out.println("4. Eliminar categoría");
+            System.out.println("1. Listar categorias");
+            System.out.println("2. Crear categoria");
+            System.out.println("3. Editar categoria");
+            System.out.println("4. Eliminar categoria");
             System.out.println("0. Salir");
             opcion = ingresarEntero("Seleccione una opcion: ");
 
+            //Validamos que la opcion ingresada sea correcta
+            while(opcion < 0 || opcion > 4){
+                System.out.println("[ERROR] Opcion invalida. Ingrese un numero del 0 al 4");
+                opcion = ingresarEntero("Seleccione una opcion: ");
+            }
+
             switch (opcion){
                 case 1:
-                    System.out.println("- Lista de categorias -");
+                    MenuCategoria.listarCategorias();
+                    break;
+                case 2:
+                    MenuCategoria.crearCategoria();
+                    break;
+                case 3:
+                    MenuCategoria.editarCategoria();
+                    break;
+                case 4:
+                    MenuCategoria.eliminarCategoria();
                     break;
             }
-        }
+        }while (opcion != 0);
     }
 
     public static void submenuProducto(){
+        int opcion;
+        do{
+            System.out.println("-- GESTION DE PRODUCTOS --");
+            System.out.println("1. Listar productos");
+            System.out.println("2. Crear producto");
+            System.out.println("3. Editar producto");
+            System.out.println("4. Eliminar producto");
+            System.out.println("0. Salir");
+            opcion = ingresarEntero("Seleccione una opcion: ");
+
+            //Validamos que la opcion ingresada sea correcta
+            while(opcion < 0 || opcion > 4){
+                System.out.println("[ERROR] Opcion invalida. Ingrese un numero del 0 al 4");
+                opcion = ingresarEntero("Seleccione una opcion: ");
+            }
+
+            switch (opcion){
+                case 1:
+                    MenuProducto.listarProductos();
+                    break;
+                case 2:
+                    MenuProducto.crearProducto();
+                    break;
+                case 3:
+                    MenuProducto.editarProducto();
+                    break;
+                case 4:
+                    MenuProducto.eliminarProducto();
+                    break;
+            }
+        }while (opcion != 0);
     }
 
     public static void submenuUsuario(){
+        int opcion;
+        do{
+            System.out.println("-- GESTION DE USUARIOS --");
+            System.out.println("1. Listar usuarios");
+            System.out.println("2. Crear usuario");
+            System.out.println("3. Editar usuario");
+            System.out.println("4. Eliminar usuario");
+            System.out.println("0. Salir");
+            opcion = ingresarEntero("Seleccione una opcion: ");
 
+            //Validamos que la opcion ingresada sea correcta
+            while(opcion < 0 || opcion > 4){
+                System.out.println("[ERROR] Opcion invalida. Ingrese un numero del 0 al 4");
+                opcion = ingresarEntero("Seleccione una opcion: ");
+            }
+
+            switch (opcion){
+                case 1:
+                    MenuUsuario.listarUsuarios();
+                    break;
+                case 2:
+                    MenuUsuario.crearUsuario();
+                    break;
+                case 3:
+                    MenuUsuario.editarUsuario();
+                    break;
+                case 4:
+                    MenuUsuario.eliminarUsuario();
+                    break;
+            }
+        }while (opcion != 0);
     }
 
     public static void submenuPedido(){
+        int opcion;
+        do{
+            System.out.println("-- GESTION DE PEDIDOS Y DETALLES --");
+            System.out.println("1. Listar pedidos");
+            System.out.println("2. Crear pedido con detalles");
+            System.out.println("3. Actualizar estado/forma de pago del pedido");
+            System.out.println("4. Eliminar pedido");
+            System.out.println("0. Salir");
+            opcion = ingresarEntero("Seleccione una opcion: ");
 
-    }
-
-    //Metodos auxiliares (nos ayudan con las validaciones de entrada)
-    private static int ingresarEntero(String mensaje) {
-        while (true) {
-            System.out.print(mensaje);
-            try {
-                return Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("[ERROR] Ingrese un número entero válido.");
+            //Validamos que la opcion ingresada sea correcta
+            while(opcion < 0 || opcion > 4){
+                System.out.println("[ERROR] Opcion invalida. Ingrese un numero del 0 al 4");
+                opcion = ingresarEntero("Seleccione una opcion: ");
             }
-        }
-    }
 
-    private static double ingresarDouble(String mensaje) {
-        while (true) {
-            System.out.print(mensaje);
-            try {
-                return Double.parseDouble(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("[ERROR] Ingrese un número decimal válido.");
+            switch (opcion){
+                case 1:
+                    MenuPedido.listarPedidos();
+                    break;
+                case 2:
+                    MenuPedido.crearPedidoConDetalles();
+                    break;
+                case 3:
+                    MenuPedido.editarPedido();
+                    break;
+                case 4:
+                    MenuPedido.eliminarPedido();
+                    break;
             }
-        }
-    }
-
-    private static String ingresarOpcionNoVacia(String mensaje) {
-        while (true) {
-            System.out.print(mensaje);
-            String entrada = scanner.nextLine();
-            if (!entrada.isEmpty()) {
-                return entrada;
-            }
-            System.out.println("[ERROR] No puede estar vacio.");
-        }
+        }while (opcion != 0);
     }
 }

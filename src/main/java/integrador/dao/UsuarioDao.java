@@ -30,7 +30,7 @@ public class UsuarioDao {
             pstmt.setString(6, usuario.getContrasenia());
             pstmt.setString(7, usuario.getRol().name());
 
-            pstmt.setBoolean(8, usuario.isEliminado());
+            pstmt.setBoolean(8, usuario.getEliminado());
             pstmt.setString(9, usuario.getCreatedAt().toString()); //Convertimos el objeto fecha a string
 
             // 3] ejecutar query

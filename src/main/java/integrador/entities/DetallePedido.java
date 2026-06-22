@@ -18,8 +18,8 @@ public class DetallePedido extends Base implements Calculable{
         }
 
         this.cantidad = cantidad;
-        this.subtotal = calcularTotal();
         this.producto = producto;
+        this.subtotal = calcularTotal();
 
     }
 

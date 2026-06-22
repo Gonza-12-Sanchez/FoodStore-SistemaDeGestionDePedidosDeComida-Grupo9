@@ -20,16 +20,14 @@ public class Producto extends Base{
         this.imagen = imagen;
         this.categoria = categoria;
 
-
         if (stock >0){
             this.disponible = true;
         }else{
             this.disponible = false;
         }
-
     }
 
-    // Getters
+    //Getters
     public String getNombre() {
         return nombre;
     }
@@ -42,11 +40,42 @@ public class Producto extends Base{
     public int getStock() {
         return stock;
     }
+    public String getImagen() {
+        return imagen;
+    }
     public boolean isDisponible() {
         return disponible;
     }
     public Categoria getCategoria() {
         return categoria;
+    }
+
+    //Setters
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+
+        //Disponible se actualiza solo
+        this.disponible = stock > 0;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     //Metodos

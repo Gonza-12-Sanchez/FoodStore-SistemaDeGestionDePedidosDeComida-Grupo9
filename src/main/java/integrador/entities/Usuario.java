@@ -57,6 +57,14 @@ public class Usuario extends Base{
         return rol;
     }
 
+    //Setters
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setApellido(String apellido) { this.apellido = apellido; }
+    public void setEmail(String email) { this.email = email; }
+    public void setCelular(String celular) { this.celular = celular; }
+    public void setContrasenia(String contrasenia) { this.contrasenia = contrasenia; }
+    public void setRol(Rol rol) { this.rol = rol; }
+
     //Metodos
     public void agregarPedido(Pedido pedido) {
         if(!pedidos.contains(pedido)){

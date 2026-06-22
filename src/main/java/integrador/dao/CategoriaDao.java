@@ -24,7 +24,7 @@ public class CategoriaDao {
             pstmt.setString(1, categoria.getId());
             pstmt.setString(2, categoria.getNombre());
             pstmt.setString(3, categoria.getDescripcion());
-            pstmt.setBoolean(4, categoria.isEliminado());
+            pstmt.setBoolean(4, categoria.getEliminado());
             pstmt.setString(5, categoria.getCreatedAt().toString()); //Convertimos el objeto fecha a string
 
             // 3] ejecutar query

@@ -2,7 +2,6 @@ package integrador.entities;
 
 import integrador.enums.Estado;
 import integrador.enums.FormatoPago;
-import integrador.exception.ListaDetallePedidoException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,10 +18,6 @@ public class Pedido extends Base implements Calculable{
     // Constructor
     public Pedido(LocalDate fecha, Estado estado, FormatoPago formatoPago) {
         super();
-        // validar (filtro) que listaDetalles no esté vacio.
-//        if(listaDetalles.isEmpty()){
-//            throw new ListaDetallePedidoException("Debe agregar al menos un detalle al pedido.");
-//        }
 
         this.fecha = fecha;
         this.estado = estado;
@@ -31,6 +26,8 @@ public class Pedido extends Base implements Calculable{
         this.formatoPago = formatoPago;
         this.usuario = null;
     }
+
+    public Pedido() {}
 
     // Getters
     public LocalDate getFecha() {
@@ -45,12 +42,19 @@ public class Pedido extends Base implements Calculable{
     public FormatoPago getFormatoPago() {
         return formatoPago;
     }
+    public ArrayList<DetallePedido> getListaDetalles() { return listaDetalles; }
 
     //Setter
     public void setUsuario(Usuario usuario) {
         if(usuario != null){
             this.usuario = usuario;
         }
+    }
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+    public void setFormatoPago(FormatoPago formatoPago) {
+        this.formatoPago = formatoPago;
     }
 
     // Metodos
@@ -82,14 +86,18 @@ public class Pedido extends Base implements Calculable{
     }
 
     public void deleteDetallePedidoByProducto(Producto producto){
+        boolean eliminado = false;
         for (DetallePedido detallePedido:listaDetalles){
             if(detallePedido.getProducto().equals(producto)){
                 System.out.println("Se pudo eliminar el detalle del pedido");
                 detallePedido.delete();
+                eliminado = true;
                 calcularTotal(); // Despues de eliminar un detallePedido del pedido, recalculamos el total
             }
         }
-        System.out.println("No se pudo eliminar el detalle del pedido.");
+        if(!eliminado){
+            System.out.println("No se pudo eliminar el detalle del pedido.");
+        }
     }
 
     @Override
@@ -97,10 +105,10 @@ public class Pedido extends Base implements Calculable{
         //Le agregamos un formato para que se vea un poco mas lindo por consola.
         return String.format("Pedido ID: %s | Fecha: %s | Cliente: %-15s | Estado: %-10s | Pago: %-13s | Total: $%.2f",
                 this.id,
-                fecha,
+                this.fecha,
                 this.usuario.getNombre(),
-                estado,
-                formatoPago,
+                this.estado,
+                this.formatoPago,
                 total);
     }
 }

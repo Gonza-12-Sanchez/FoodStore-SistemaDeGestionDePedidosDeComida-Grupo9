@@ -1,7 +1,6 @@
 package integrador.dao;
 
 import integrador.config.DatabaseConfig;
-import integrador.entities.Categoria;
 import integrador.entities.Producto;
 
 import java.sql.Connection;
@@ -20,7 +19,7 @@ public class ProductoDao {
             pstmt.setDouble(4, producto.getPrecio());
             pstmt.setString(5, producto.getDescripcion());
             pstmt.setInt(6,producto.getStock());
-            pstmt.setBoolean(7,producto.isEliminado());
+            pstmt.setBoolean(7,producto.getEliminado());
             pstmt.setString(8,producto.getCreatedAt().toString());
 
             pstmt.executeUpdate();
